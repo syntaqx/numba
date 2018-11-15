@@ -6,17 +6,17 @@ import (
 )
 
 var abbreviateTests = []struct {
-	in  int64
+	in  int
 	out string
 }{
 	{-1, "-1"},
 	{0, "0"},
 	{1, "1"},
 	{100, "100"},
-	{1000, "1K"},
-	{1100, "1.1K"},
-	{1111, "1.1K"},
-	{1500, "1.5K"},
+	{1000, "1k"},
+	{1100, "1.1k"},
+	{1111, "1.1k"},
+	{1500, "1.5k"},
 	{1000000, "1M"},
 	{1500000, "1.5M"},
 	{1000000000, "1B"},
@@ -36,32 +36,13 @@ func TestAbbreviate(t *testing.T) {
 	}
 }
 
-var wordTests = []struct {
-	in  int64
-	out string
-}{
-	{-1, "-1"},
-	{0, "0"},
-	{1, "1"},
-	{100, "100"},
-	{1000, "1 thousand"},
-	{1100, "1.1 thousand"},
-	{1111, "1.1 thousand"},
-	{1500, "1.5 thousand"},
-	{1000000, "1 million"},
-	{1500000, "1.5 million"},
-	{1000000000, "1 billion"},
-	{1500000000, "1.5 billion"},
-	{1000000000000, "1 trillion"},
-	{1500000000000, "1.5 trillion"},
-}
-
-func TestWord(t *testing.T) {
-	for _, tt := range wordTests {
+// @TODO: Should probably test some 64bit ints
+func TestAbbreviate64(t *testing.T) {
+	for _, tt := range abbreviateTests {
 		t.Run(fmt.Sprintf("%d", tt.in), func(t *testing.T) {
-			s := Word(tt.in)
+			s := Abbreviate64(int64(tt.in))
 			if s != tt.out {
-				t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)
+				t.Errorf("got %q, want %q from %d", s, tt.out, int64(tt.in))
 			}
 		})
 	}

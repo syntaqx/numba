@@ -4,10 +4,12 @@ import (
 	"testing"
 )
 
-var abbreviateTests = []struct {
+type abbreviateTest struct {
 	in  int64
 	out string
-}{
+}
+
+var abbreviateTests = []abbreviateTest{
 	{-1, "-1"},
 	{0, "0"},
 	{1, "1"},
@@ -28,16 +30,15 @@ var abbreviateTests = []struct {
 
 func TestAbbreviate(t *testing.T) {
 	t.Parallel()
-
-	for _, test := range abbreviateTests {
-		tt := test
-		t.Run(tt.out, func(t *testing.T) {
-			t.Parallel()
-
-			s := Abbreviate(tt.in)
-			if s != tt.out {
-				t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)
-			}
-		})
+	for _, tt := range abbreviateTests {
+		func(tt abbreviateTest) {
+			t.Run(tt.out, func(t *testing.T) {
+				t.Parallel()
+				s := Abbreviate(tt.in)
+				if s != tt.out {
+					t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)
+				}
+			})
+		}(tt)
 	}
 }

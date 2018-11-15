@@ -4,12 +4,14 @@ import (
 	"testing"
 )
 
-var bytesTests = []struct {
-	Value     int64
-	Base      int
-	Precision int
-	Result    string
-}{
+type bytesTest struct {
+	value     int64
+	base      int
+	precision int
+	out       string
+}
+
+var bytesTests = []bytesTest{
 	{1000, 10, 0, "1KB"},
 	{1024, 10, 2, "1.02KB"},
 	{1024, 2, 1, "1.0KiB"},
@@ -23,24 +25,26 @@ var bytesTests = []struct {
 
 func TestBytes(t *testing.T) {
 	t.Parallel()
-
-	for _, test := range bytesTests {
-		tt := test
-		t.Run(tt.Result, func(t *testing.T) {
-			t.Parallel()
-			ts := Bytes(tt.Value, tt.Base, tt.Precision)
-			if ts != tt.Result {
-				t.Errorf("%d base %d precision %d should be %s, was %s", tt.Value,
-					tt.Base, tt.Precision, tt.Result, ts)
-			}
-		})
+	for _, tt := range bytesTests {
+		func(tt bytesTest) {
+			t.Run(tt.out, func(t *testing.T) {
+				t.Parallel()
+				out := Bytes(tt.value, tt.base, tt.precision)
+				if out != tt.out {
+					t.Errorf("%d base %d precision 1%d should be %s, got %s", tt.value,
+						tt.base, tt.precision, tt.out, out)
+				}
+			})
+		}(tt)
 	}
 }
 
-var parseBytesTests = []struct {
-	Value  string
-	Result int64
-}{
+type parseBytesTest struct {
+	in  string
+	out int64
+}
+
+var parseBytesTests = []parseBytesTest{
 	{"1KB", 1000},
 	{"1KiB", 1024},
 	{"6GiB", 6 * 1024 * 1024 * 1024},
@@ -48,43 +52,45 @@ var parseBytesTests = []struct {
 
 func TestParseBytes(t *testing.T) {
 	t.Parallel()
-
-	for _, test := range parseBytesTests {
-		tt := test
-		t.Run(tt.Value, func(t *testing.T) {
-			t.Parallel()
-			x, err := ParseBytes(tt.Value)
-			if err != nil {
-				t.Errorf("error: %v", err)
-			}
-			if x != tt.Result {
-				t.Errorf("failed to parse %s correctly", tt.Value)
-			}
-		})
+	for _, tt := range parseBytesTests {
+		func(tt parseBytesTest) {
+			t.Run(tt.in, func(t *testing.T) {
+				t.Parallel()
+				out, err := ParseBytes(tt.in)
+				if err != nil {
+					t.Errorf("error: %v", err)
+				}
+				if out != tt.out {
+					t.Errorf("failed to parse %s correctly, expected %v got %v", tt.in, tt.out, out)
+				}
+			})
+		}(tt)
 	}
 }
 
-var byteSplitTests = []struct {
+type byteSplitTest struct {
 	in   string
 	out1 string
 	out2 string
-}{
+}
+
+var byteSplitTests = []byteSplitTest{
 	{"10MB", "10", "MB"},
 	{"5 GiB", "5", "GiB"},
 }
 
 func TestSplit(t *testing.T) {
 	t.Parallel()
-
-	for _, test := range byteSplitTests {
-		tt := test
-		t.Run(tt.in, func(t *testing.T) {
-			t.Parallel()
-			out1, out2 := byteSplit(tt.in)
-			if out1 != tt.out1 || out2 != tt.out2 {
-				t.Errorf("unexpected output from byteSplit. expected %s/%s, got %s/%s", tt.out1, tt.out2, out1, out2)
-			}
-		})
+	for _, tt := range byteSplitTests {
+		func(tt byteSplitTest) {
+			t.Run(tt.in, func(t *testing.T) {
+				t.Parallel()
+				out1, out2 := byteSplit(tt.in)
+				if out1 != tt.out1 || out2 != tt.out2 {
+					t.Errorf("unexpected output from byteSplit. expected %s/%s, got %s/%s", tt.out1, tt.out2, out1, out2)
+				}
+			})
+		}(tt)
 	}
 }
 

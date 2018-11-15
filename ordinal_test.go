@@ -4,10 +4,12 @@ import (
 	"testing"
 )
 
-var ordinalTests = []struct {
+type ordinalTest struct {
 	in  int64
 	out string
-}{
+}
+
+var ordinalTests = []ordinalTest{
 	{0, "0th"},
 	{1, "1st"},
 	{2, "2nd"},
@@ -24,17 +26,15 @@ var ordinalTests = []struct {
 
 func TestOrdinal(t *testing.T) {
 	t.Parallel()
-
-	for _, test := range ordinalTests {
-		tt := test
-
-		t.Run(tt.out, func(t *testing.T) {
-			t.Parallel()
-
-			s := Ordinal(tt.in)
-			if s != tt.out {
-				t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)
-			}
-		})
+	for _, tt := range ordinalTests {
+		func(tt ordinalTest) {
+			t.Run(tt.out, func(t *testing.T) {
+				t.Parallel()
+				s := Ordinal(tt.in)
+				if s != tt.out {
+					t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)
+				}
+			})
+		}(tt)
 	}
 }

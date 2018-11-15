@@ -1,6 +1,3 @@
-sudo: false
-dist: trusty
-
 language: go
 
 # Force-enable Go modules. This will be unnecessary when Go 1.12 lands.

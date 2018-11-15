@@ -7,31 +7,29 @@ import (
 	"unicode"
 )
 
-// BaseUnit is a type that defines a unit of measure as a distinct dimensions
-// from which all other units can be derived.
-type BaseUnit = float64
+type baseByteUnit = float64
 
 // International Electrotechnical Commission (IEC) base 2 units [IEEE 1541]
 // - http://physics.nist.gov/cuu/Units/binary.html
 // - https://en.wikipedia.org/wiki/Binary_prefix
 const (
-	// Byte is the BaseUnit for all binary prefix sizes
-	Byte BaseUnit = 1 << (iota * 10)
-	// Kibibyte is a multiple of the BaseUnit Byte.
+	// Byte is the baseByteUnit for all binary prefix sizes
+	Byte baseByteUnit = 1 << (iota * 10)
+	// Kibibyte is a multiple of a Byte.
 	Kibibyte
-	// Mebibyte is a multiple of the BaseUnit Byte.
+	// Mebibyte is a multiple of a Byte.
 	Mebibyte
-	// Gibibyte is a multiple of the BaseUnit Byte.
+	// Gibibyte is a multiple of a Byte.
 	Gibibyte
-	// Tebibyte is a multiple of the BaseUnit Byte.
+	// Tebibyte is a multiple of a Byte.
 	Tebibyte
-	// Pebibyte is a multiple of the BaseUnit Byte.
+	// Pebibyte is a multiple of a Byte.
 	Pebibyte
-	// Exbibyte is a multiple of the BaseUnit Byte.
+	// Exbibyte is a multiple of a Byte.
 	Exbibyte
-	// Zebibyte is a multiple of the BaseUnit Byte.
+	// Zebibyte is a multiple of a Byte.
 	Zebibyte
-	// Yobibyte is a multiple of the BaseUnit Byte.
+	// Yobibyte is a multiple of a Byte.
 	Yobibyte
 )
 
@@ -57,21 +55,21 @@ const (
 // International Systems of Units (SI) base 10 units
 // - http://physics.nist.gov/cuu/Units/prefixes.html
 const (
-	// Kilobyte is a multiple of the BaseUnit Byte.
-	Kilobyte BaseUnit = 1000 * Byte
-	// Megabyte is a multiple of the BaseUnit Byte.
+	// Kilobyte is a multiple of a Byte.
+	Kilobyte baseByteUnit = 1000 * Byte
+	// Megabyte is a multiple of a Byte.
 	Megabyte = 1000 * Kilobyte
-	// Gigabyte is a multiple of the BaseUnit Byte.
+	// Gigabyte is a multiple of a Byte.
 	Gigabyte = 1000 * Megabyte
-	// Terabyte is a multiple of the BaseUnit Byte.
+	// Terabyte is a multiple of a Byte.
 	Terabyte = 1000 * Gigabyte
-	// Petabyte is a multiple of the BaseUnit Byte.
+	// Petabyte is a multiple of a Byte.
 	Petabyte = 1000 * Terabyte
-	// Zettabyte is a multiple of the BaseUnit Byte.
+	// Zettabyte is a multiple of a Byte.
 	Exabyte = 1000 * Petabyte
-	// Zettabyte is a multiple of the BaseUnit Byte.
+	// Zettabyte is a multiple of a Byte.
 	Zettabyte = 1000 * Exabyte
-	// Yottabyte is a multiple of the BaseUnit Byte.
+	// Yottabyte is a multiple of a Byte.
 	Yottabyte = 1000 * Zettabyte
 )
 

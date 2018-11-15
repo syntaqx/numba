@@ -1,7 +1,6 @@
 package numba
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -28,8 +27,12 @@ var abbreviateTests = []struct {
 }
 
 func TestAbbreviate(t *testing.T) {
+	t.Parallel()
+
 	for _, tt := range abbreviateTests {
-		t.Run(fmt.Sprintf("%d", tt.in), func(t *testing.T) {
+		t.Run(tt.out, func(t *testing.T) {
+			t.Parallel()
+
 			s := Abbreviate(tt.in)
 			if s != tt.out {
 				t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)

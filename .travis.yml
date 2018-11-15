@@ -16,7 +16,7 @@ install:
   - go mod download
 
 script:
-  - go test -v ./...
+  - go test -v -race ./...
 
 matrix:
   allow_failures:

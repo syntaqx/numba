@@ -1,7 +1,6 @@
 package numba
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -24,8 +23,12 @@ var ordinalTests = []struct {
 }
 
 func TestOrdinal(t *testing.T) {
+	t.Parallel()
+
 	for _, tt := range ordinalTests {
-		t.Run(fmt.Sprintf("%d", tt.in), func(t *testing.T) {
+		t.Run(tt.out, func(t *testing.T) {
+			t.Parallel()
+
 			s := Ordinal(tt.in)
 			if s != tt.out {
 				t.Errorf("got %q, want %q from %d", s, tt.out, tt.in)

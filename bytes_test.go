@@ -68,6 +68,14 @@ func TestParseBytes(t *testing.T) {
 	}
 }
 
+func TestParseBytesErrors(t *testing.T) {
+	t.Parallel()
+	_, err := ParseBytes("1ZB")
+	if err == nil {
+		t.Errorf("failed to flag range error")
+	}
+}
+
 type byteSplitTest struct {
 	in   string
 	out1 string
@@ -91,13 +99,5 @@ func TestSplit(t *testing.T) {
 				}
 			})
 		}(tt)
-	}
-}
-
-func TestErrors(t *testing.T) {
-	t.Parallel()
-	_, err := ParseBytes("1ZB")
-	if err == nil {
-		t.Errorf("failed to flag range error")
 	}
 }

@@ -35,15 +35,3 @@ func TestAbbreviate(t *testing.T) {
 		})
 	}
 }
-
-// @TODO: Should probably test some 64bit ints
-func TestAbbreviate64(t *testing.T) {
-	for _, tt := range abbreviateTests {
-		t.Run(fmt.Sprintf("%d", tt.in), func(t *testing.T) {
-			s := Abbreviate64(int64(tt.in))
-			if s != tt.out {
-				t.Errorf("got %q, want %q from %d", s, tt.out, int64(tt.in))
-			}
-		})
-	}
-}

@@ -13,13 +13,9 @@ env:
 install:
   - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $GOPATH/bin v1.12.2
 
-jobs:
-  - stage: test
-    name: "Lint"
-    script: golangci-lint run
-  - stage: test
-    name: "Unit Tests"
-    script: go test -race -coverprofile=coverage.txt -covermode=atomic
+script:
+  - golangci-lint run
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -31,6 +27,3 @@ matrix:
 
 notifications:
   email: false
-
-stages:
-  - test

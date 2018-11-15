@@ -1,27 +1,41 @@
-git:
-  depth: false
-
-language: go
-go:
-  - tip
-  - 1.11.x
-
 sudo: false
 dist: trusty
 
-env:
-  - GO111MODULE=on
+language: go
 
-install:
+# Force-enable Go modules. This will be unnecessary when Go 1.12 lands.
+env:
+  global:
+    - GO111MODULE=on
+
+# We don't support old versions of the Go compiler. Users will need to update.
+go:
+  - 1.11.x
+  - tip
+
+# Skip the install step. Don't `go get` dependencies.
+install: true
   - go mod download
 
-script:
-  - go test -v -race ./...
+# Anything in before_script that returns a nonzero exit code will flunk the
+# build and immediately stop. It's sorta like having set -e enabled in bash.
+# Make sure golangci-lint is vendored.
+before_script:
+  - go install -mod vendor github.com/golangci/golangci-lint/cmd/golangci-lint
 
+# script always runs to completion (set +e). If we have linter issues AND a
+# failing test, we want to see both. Configure golangci-lint with a
+# .golangci.yml file at the top level of your repo.
+script:
+  - golangci-lint run       # run a bunch of code checkers/linters in parallel
+  - go test -v -race ./...  # Run all the tests with the race detector enabled
+
+# Allow tip to fail, we're just looking forward.
 matrix:
   allow_failures:
     - go: tip
   fast_finish: true
 
+# No more emails please
 notifications:
   email: false

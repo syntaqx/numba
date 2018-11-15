@@ -9,7 +9,7 @@ var abbreviations = []string{"k", "M", "B", "T", "q", "Q", "s", "S"}
 
 // Abbreviate formats integer n to it's large scale abbreviated format.
 func Abbreviate(n int) string {
-	num := strconv.FormatInt(int64(n), 10)
+	num := strconv.Itoa(n)
 	l := len(num)
 
 	if n > 0 && l > 3 {

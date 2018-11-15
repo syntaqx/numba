@@ -8,8 +8,8 @@ import (
 var abbreviations = []string{"k", "M", "B", "T", "q", "Q", "s", "S"}
 
 // Abbreviate formats integer n to it's large scale abbreviated format.
-func Abbreviate(n int) string {
-	num := strconv.Itoa(n)
+func Abbreviate(n int64) string {
+	num := strconv.FormatInt(n, 10)
 	l := len(num)
 
 	if n > 0 && l > 3 {

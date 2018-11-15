@@ -5,7 +5,7 @@ import (
 )
 
 var abbreviateTests = []struct {
-	in  int
+	in  int64
 	out string
 }{
 	{-1, "-1"},

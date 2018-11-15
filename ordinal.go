@@ -10,12 +10,12 @@ const (
 )
 
 // Ordinal formats integer n with its ordinal suffix.
-func Ordinal(n int) string {
-	return strconv.Itoa(n) + OrdinalSuffix(n)
+func Ordinal(n int64) string {
+	return strconv.FormatInt(n, 10) + OrdinalSuffix(n)
 }
 
 // OrdinalSuffix returns the ordinal suffix that should be added to integer n.
-func OrdinalSuffix(n int) string {
+func OrdinalSuffix(n int64) string {
 	switch n % 100 {
 	case 11, 12, 13: // go switch cases do not fall through
 	default:

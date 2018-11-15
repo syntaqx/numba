@@ -5,7 +5,7 @@ import (
 )
 
 var ordinalTests = []struct {
-	in  int
+	in  int64
 	out string
 }{
 	{0, "0th"},

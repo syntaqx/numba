@@ -25,7 +25,9 @@ var ordinalTests = []struct {
 func TestOrdinal(t *testing.T) {
 	t.Parallel()
 
-	for _, tt := range ordinalTests {
+	for _, test := range ordinalTests {
+		tt := test
+
 		t.Run(tt.out, func(t *testing.T) {
 			t.Parallel()
 

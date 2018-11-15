@@ -10,9 +10,6 @@
 # Test binary, build with `go test -c`
 *.test
 
-# SQLite Databases
-*.db
-
 # Output of the go coverage tool, specifically when used with LiteIDE
 coverage*
 *.out
@@ -20,6 +17,3 @@ coverage*
 # Dependency directories
 vendor/
 _vendor-*/
-
-# Build artifacts
-bin/

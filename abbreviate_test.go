@@ -29,7 +29,8 @@ var abbreviateTests = []struct {
 func TestAbbreviate(t *testing.T) {
 	t.Parallel()
 
-	for _, tt := range abbreviateTests {
+	for _, test := range abbreviateTests {
+		tt := test
 		t.Run(tt.out, func(t *testing.T) {
 			t.Parallel()
 

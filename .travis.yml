@@ -1,24 +1,29 @@
 language: go
 go:
   - 1.11.x
-  - tip
+  - master
 
 env:
   global:
     - GO111MODULE=on
 
-install: true
+# this should be changed to the solutions of:
+# - https://github.com/golang/go/issues/24250
+# - https://github.com/go-modules-by-example/index/blob/master/017_using_gobin/README.md
+install:
+  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $GOPATH/bin v1.12.2
 
 script:
+  - golangci-lint run
   - go test -v -race -coverprofile=coverage.txt -covermode=atomic
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 matrix:
-  allow_failures:
-    - go: tip
   fast_finish: true
+  allow_failures:
+    - go: master
 
 notifications:
   email: false

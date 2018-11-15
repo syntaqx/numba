@@ -67,21 +67,30 @@ func TestParseBytes(t *testing.T) {
 func TestSplit(t *testing.T) {
 	t.Parallel()
 
-	x, y := split("10MB")
-	if x != "10" || y != "MB" {
-		t.Errorf("failed to split 10MB")
-	}
-	x, y = split("5 GiB")
-	if x != "5" || y != "GiB" {
-		t.Errorf("failed to split 5 GiB")
-	}
+	t.Run("10MB", func(t *testing.T) {
+		t.Parallel()
+		x, y := split("10MB")
+		if x != "10" || y != "MB" {
+			t.Errorf("failed to split 10MB")
+		}
+	})
+
+	t.Run("5 GiB", func(t *testing.T) {
+		t.Parallel()
+		x, y := split("5 GiB")
+		if x != "5" || y != "GiB" {
+			t.Errorf("failed to split 5 GiB")
+		}
+	})
 }
 
 func TestErrors(t *testing.T) {
 	t.Parallel()
 
-	_, err := ParseBytes("1ZB")
-	if err == nil {
-		t.Errorf("failed to flag range error")
-	}
+	t.Run("1ZB", func(t *testing.T) {
+		_, err := ParseBytes("1ZB")
+		if err == nil {
+			t.Errorf("failed to flag range error")
+		}
+	})
 }

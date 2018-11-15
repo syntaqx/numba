@@ -64,33 +64,34 @@ func TestParseBytes(t *testing.T) {
 	}
 }
 
+var byteSplitTests = []struct {
+	in   string
+	out1 string
+	out2 string
+}{
+	{"10MB", "10", "MB"},
+	{"5 GiB", "5", "GiB"},
+}
+
 func TestSplit(t *testing.T) {
 	t.Parallel()
 
-	t.Run("10MB", func(t *testing.T) {
-		t.Parallel()
-		x, y := split("10MB")
-		if x != "10" || y != "MB" {
-			t.Errorf("failed to split 10MB")
-		}
-	})
-
-	t.Run("5 GiB", func(t *testing.T) {
-		t.Parallel()
-		x, y := split("5 GiB")
-		if x != "5" || y != "GiB" {
-			t.Errorf("failed to split 5 GiB")
-		}
-	})
+	for _, test := range byteSplitTests {
+		tt := test
+		t.Run(tt.in, func(t *testing.T) {
+			t.Parallel()
+			out1, out2 := byteSplit(tt.in)
+			if out1 != tt.out1 || out2 != tt.out2 {
+				t.Errorf("unexpected output from byteSplit. expected %s/%s, got %s/%s", tt.out1, tt.out2, out1, out2)
+			}
+		})
+	}
 }
 
 func TestErrors(t *testing.T) {
 	t.Parallel()
-
-	t.Run("1ZB", func(t *testing.T) {
-		_, err := ParseBytes("1ZB")
-		if err == nil {
-			t.Errorf("failed to flag range error")
-		}
-	})
+	_, err := ParseBytes("1ZB")
+	if err == nil {
+		t.Errorf("failed to flag range error")
+	}
 }

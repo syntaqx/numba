@@ -171,7 +171,7 @@ func Bytes(bytes int64, base int, prec int) string {
 	return fmt.Sprintf("%.*fB", prec, float64(b))
 }
 
-func split(s string) (string, string) {
+func byteSplit(s string) (string, string) {
 	s1 := make([]rune, 0, len(s))
 	s2 := make([]rune, 0, len(s))
 	for _, r := range s {
@@ -192,7 +192,7 @@ func split(s string) (string, string) {
 // Whitespace is allowed between the number and the units. The 'B' for bytes is
 // required to be upper case; 'b' in lower case would be bits.
 func ParseBytesFloat(s string) (float64, error) {
-	b, u := split(s)
+	b, u := byteSplit(s)
 	fb, err := strconv.ParseFloat(b, 64)
 	if err != nil {
 		return fb, err

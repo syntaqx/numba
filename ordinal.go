@@ -9,12 +9,12 @@ const (
 	rd = "rd"
 )
 
-// Ordinal formats integer n with its ordinal suffix.
+// Ordinal formats integer n to its value with an ordinal suffix.
 func Ordinal(n int64) string {
 	return strconv.FormatInt(n, 10) + OrdinalSuffix(n)
 }
 
-// OrdinalSuffix returns the ordinal suffix that should be added to integer n.
+// OrdinalSuffix returns the appendable ordinal suffix to be used for integer n.
 func OrdinalSuffix(n int64) string {
 	switch n % 100 {
 	case 11, 12, 13: // go switch cases do not fall through
